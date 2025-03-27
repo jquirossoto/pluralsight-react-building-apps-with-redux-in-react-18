@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CourseForm from "./CourseForm";
-import { newCourse } from "../../../tools/mockData";
 import { useDispatch, useSelector } from "react-redux";
-import { loadAuthors } from "../../redux/actions/authorActions";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { newCourse } from "../../../tools/mockData";
+import { loadAuthors } from "../../redux/actions/authorActions";
 import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
+import Spinner from "../common/Spinner";
+import CourseForm from "./CourseForm";
 
 export default function ManageCoursePage() {
   const courses = useSelector(state => state.courses);
@@ -13,6 +15,8 @@ export default function ManageCoursePage() {
   const dispatch = useDispatch();
   const [course, setCourse] = useState(newCourse);
   const { slug } = useParams();
+  const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -40,19 +44,46 @@ export default function ManageCoursePage() {
     }));
   }
 
-  function handleSave(event) {
-    event.preventDefault();
-    dispatch(saveCourse(course)).then(() => {
-      navigate("/courses");
-    });
+  function formIsValid() {
+    const { title, authorId, category } = course;
+    const errors = {};
+
+    if (!title) errors.title = "Title is required.";
+    if (!authorId) errors.author = "Author is required";
+    if (!category) errors.category = "Category is required";
+
+    setErrors(errors);
+    // Form is valid if the errors object still has no properties
+    return Object.keys(errors).length === 0;
   }
 
-  return (
+  function handleSave(event) {
+    event.preventDefault();
+    if (!formIsValid()) {
+      return;
+    }
+    setSaving(true);
+    dispatch(saveCourse(course))
+      .then(() => {
+        toast.success("Course saved");
+        navigate("/courses");
+      })
+      .catch(err => {
+        setSaving(false);
+        setErrors({ onSave: err.message });
+      });
+  }
+
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       authors={authors}
       course={course}
+      errors={errors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 }
