@@ -9,7 +9,7 @@ exports[`sets submit button label 'Save' when saving is false 1`] = `
      Course
   </h2>
   <div
-    className="form-group"
+    className="mb-3"
   >
     <label
       htmlFor="title"
@@ -29,7 +29,7 @@ exports[`sets submit button label 'Save' when saving is false 1`] = `
     </div>
   </div>
   <div
-    className="form-group"
+    className="mb-3"
   >
     <label
       htmlFor="authorId"
@@ -69,7 +69,7 @@ exports[`sets submit button label 'Save' when saving is false 1`] = `
     </div>
   </div>
   <div
-    className="form-group"
+    className="mb-3"
   >
     <label
       htmlFor="category"
@@ -107,7 +107,7 @@ exports[`sets submit button label 'Saving...' when saving is true 1`] = `
      Course
   </h2>
   <div
-    className="form-group"
+    className="mb-3"
   >
     <label
       htmlFor="title"
@@ -127,7 +127,7 @@ exports[`sets submit button label 'Saving...' when saving is true 1`] = `
     </div>
   </div>
   <div
-    className="form-group"
+    className="mb-3"
   >
     <label
       htmlFor="authorId"
@@ -167,7 +167,7 @@ exports[`sets submit button label 'Saving...' when saving is true 1`] = `
     </div>
   </div>
   <div
-    className="form-group"
+    className="mb-3"
   >
     <label
       htmlFor="category"
